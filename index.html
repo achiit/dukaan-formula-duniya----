@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formula Duniya – गणित और विज्ञान</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&family=Hind:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f0e4;--grid:#d9d4bf;--card:#fffdf5;--tx:#16264a;--mut:#5d6785;--pr:#2447c9;--hl:#ffd23f;--ok:#14935a;--bad:#d6393f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1a33;--grid:#1b2a4f;--card:#16264a;--tx:#f4f1e2;--mut:#9fb0d8;--pr:#8fb0ff;--hl:#ffd23f;--ok:#3fd18f;--bad:#ff7076;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1a33;--grid:#1b2a4f;--card:#16264a;--tx:#f4f1e2;--mut:#9fb0d8;--pr:#8fb0ff;--hl:#ffd23f;--ok:#3fd18f;--bad:#ff7076;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px;color:var(--tx);font:16px/1.6 Hind,system-ui,sans-serif;min-height:100vh}
+h1,h2,h3,button,.b{font-family:"Baloo 2",Hind,system-ui,sans-serif}
+.w{max-width:880px;margin:0 auto;padding:14px 14px 40px}
+header{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+h1{font-size:clamp(26px,6vw,40px);margin:4px 0;line-height:1.1}
+h1 span{background:var(--hl);color:#16264a;padding:0 8px;border-radius:4px;display:inline-block;transform:rotate(-2deg);animation:pop .8s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{from{transform:scale(.2) rotate(-20deg);opacity:0}}
+.sym{position:fixed;font-family:"Baloo 2";opacity:.09;font-size:44px;pointer-events:none;animation:fl 14s linear infinite;z-index:0}
+@keyframes fl{from{transform:translateY(105vh) rotate(0)}to{transform:translateY(-15vh) rotate(360deg)}}
+.w{position:relative;z-index:1}
+.bar{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+button{font-size:16px;cursor:pointer;border:2px solid var(--tx);background:var(--card);color:var(--tx);border-radius:10px;padding:5px 12px;min-height:40px;transition:transform .12s}
+button:active{transform:scale(.95)}
+button.on{background:var(--pr);color:#fff;border-color:var(--pr)}
+:root[data-theme="dark"] button.on,:root:not([data-theme="light"]) button.on{color:#0f1a33}
+button:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.tabs button{flex:1;min-width:84px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.fc{perspective:900px;height:130px;cursor:pointer}
+.in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.fc.f .in{transform:rotateY(180deg)}
+.fa,.fb{position:absolute;inset:0;backface-visibility:hidden;border:2px solid var(--tx);border-radius:14px;background:var(--card);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:10px;box-shadow:4px 4px 0 var(--tx)}
+.fb{transform:rotateY(180deg);background:var(--hl);color:#16264a}
+.fb .m{font:700 clamp(18px,4.5vw,23px)/1.3 "Baloo 2",serif;word-break:break-word}
+.tag{font-size:13px;color:var(--mut)}
+.box{background:var(--card);border:2px solid var(--tx);border-radius:14px;padding:16px;box-shadow:4px 4px 0 var(--tx);margin-top:10px}
+.q{font:700 clamp(20px,5vw,26px)/1.3 "Baloo 2"}
+.opts{display:grid;gap:8px;margin-top:12px}
+.opts button{text-align:left;font-size:18px;padding:8px 14px}
+.ok{background:var(--ok)!important;color:#fff!important;border-color:var(--ok)!important;animation:pop .4s}
+.no{background:var(--bad)!important;color:#fff!important;border-color:var(--bad)!important;animation:sh .35s}
+@keyframes sh{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.sc{display:flex;gap:14px;font:700 18px "Baloo 2";flex-wrap:wrap}
+input[type=number]{font-size:20px;padding:8px 12px;border:2px solid var(--tx);border-radius:10px;background:var(--card);color:var(--tx);width:140px}
+.msg{min-height:30px;font-weight:500;margin-top:8px}
+#cv{height:300px;border:2px solid var(--tx);border-radius:14px;background:radial-gradient(circle at 50% 40%,var(--card),var(--bg));touch-action:none;overflow:hidden}
+label{display:block;margin-top:8px}
+input[type=range]{width:100%;accent-color:var(--pr)}
+.big{font:700 22px "Baloo 2";color:var(--pr)}
+.hud{font:700 15px 'Baloo 2';background:var(--hl);color:#16264a;border-radius:20px;padding:2px 12px;border:2px solid var(--tx);margin-left:8px;white-space:nowrap}
+.kb{margin-top:4px;min-height:32px;padding:0 10px;font-size:14px;background:#fffdf5;color:#16264a}
+.pb{height:10px;border:2px solid var(--tx);border-radius:6px;background:var(--card);overflow:hidden;margin:6px 0 12px}.pb i{display:block;height:100%;background:var(--ok);transition:width .4s}
+.tm{height:8px;border-radius:6px;background:var(--grid);margin-top:8px;overflow:hidden}.tm i{display:block;height:100%;width:100%;background:var(--bad)}
+body{background-image:radial-gradient(circle at 8% 0,#ff4d8d38,transparent 40%),radial-gradient(circle at 95% 8%,#22d3ee38,transparent 40%),radial-gradient(circle at 50% 100%,#a3e63544,transparent 45%),linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:auto,auto,auto,28px 28px,28px 28px}
+h1 span{background:linear-gradient(90deg,#ff4d8d,#ff9f1c,#2ec4b6,#4361ee);color:#fff}
+.tabs button:nth-child(1){--k:#4361ee}.tabs button:nth-child(2){--k:#ff4d8d}.tabs button:nth-child(3){--k:#ff9f1c}.tabs button:nth-child(4){--k:#2ec4b6}.tabs button:nth-child(5){--k:#9b5de5}.tabs button:nth-child(6){--k:#e63946}
+.tabs button{border-color:var(--k)}.tabs button.on{background:var(--k)!important;border-color:var(--k)!important;color:#fff!important}
+#cl button.on{background:linear-gradient(90deg,#ff4d8d,#ff9f1c)!important;color:#fff!important;border-color:transparent}
+.fa.sM{background:linear-gradient(135deg,#d4e0ff,#ffd3ea);color:#16264a;border-color:#4361ee;box-shadow:4px 4px 0 #4361ee}
+.fa.sS{background:linear-gradient(135deg,#c9f7e4,#fff0bd);color:#16264a;border-color:#14935a;box-shadow:4px 4px 0 #14935a}
+.fa .tag{color:#3b4670}
+.box{box-shadow:4px 4px 0 #9b5de5}
+.opts button:nth-child(4n+1){border-color:#4361ee}.opts button:nth-child(4n+2){border-color:#ff4d8d}.opts button:nth-child(4n+3){border-color:#ff9f1c}.opts button:nth-child(4n){border-color:#2ec4b6}
+.tabs button:nth-child(7){--k:#0ea5e9}details.box summary{cursor:pointer}details.box[open]{background:linear-gradient(135deg,var(--card),#ffd23f22)}
+.tabs button:nth-child(8){--k:#f97316}.tabs button:nth-child(9){--k:#10b981}.tabs button:nth-child(10){--k:#6366f1}a.b{display:inline-block;border:2px solid var(--tx);border-radius:10px;padding:5px 12px;color:var(--tx);text-decoration:none;background:var(--card)}
+.lock .w,.lock .sym{display:none}#gate{display:none;max-width:440px;margin:10vh auto;padding:14px;position:relative;z-index:2}.lock #gate{display:block}#ntc:not(:empty){background:var(--hl);color:#16264a;border:2px solid var(--tx);border-radius:10px;padding:6px 12px;margin-top:8px;font-weight:500}.tabs button:nth-child(11){--k:#ec4899}.tabs button:nth-child(12){--k:#334155}
+.cf{position:fixed;top:-14px;width:10px;height:14px;z-index:9;pointer-events:none;animation:cf 1.5s ease-in forwards}@keyframes cf{to{transform:translateY(108vh) rotate(720deg)}}
+.mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}.mc{min-height:76px;font-size:15px;line-height:1.25;word-break:break-word}.mc.up{background:var(--hl);color:#16264a}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head>
+<body class="lock">
+<div class="sym" style="left:6%;animation-delay:-2s">π</div><div class="sym" style="left:28%;animation-delay:-7s">E=mc²</div><div class="sym" style="left:52%;animation-delay:-4s">√x</div><div class="sym" style="left:74%;animation-delay:-10s">F=ma</div><div class="sym" style="left:90%;animation-delay:-1s">Σ</div>
+<div id="gate"><div class="box"><div class="q">⏳ Loading…</div></div></div>
+<div class="w">
+<header><h1><span>Formula</span> Duniya</h1><span class='hud' id='hud'></span><div class="bar"><button id="lg" class="b"></button><button id="th" aria-label="theme">◐</button></div></header>
+<div class="bar" id="cl"></div>
+<div class="bar tabs" id="tb"></div>
+<div id="ntc"></div><div id="main"></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const F=[
+[6,'M','Perimeter of Rectangle','आयत का परिमाप','P = 2(l + b)'],
+[6,'M','Area of Rectangle','आयत का क्षेत्रफल','A = l × b'],
+[6,'M','Area of Square','वर्ग का क्षेत्रफल','A = a²'],
+[7,'M','Simple Interest','साधारण ब्याज','SI = (P × R × T) / 100'],
+[7,'M','Area of Triangle','त्रिभुज का क्षेत्रफल','A = ½ × b × h'],
+[7,'S','Speed','चाल','v = d / t'],
+[8,'M','Area of Circle','वृत्त का क्षेत्रफल','A = πr²'],
+[8,'M','Circumference of Circle','वृत्त की परिधि','C = 2πr'],
+[8,'M','Volume of Cube','घन का आयतन','V = a³'],
+[8,'M','Square of Sum','योग का वर्ग','(a + b)² = a² + 2ab + b²'],
+[8,'S','Pressure','दाब','P = F / A'],
+[8,'S','Density','घनत्व','ρ = m / V'],
+[9,'M','Heron’s Formula','हीरोन का सूत्र','A = √(s(s−a)(s−b)(s−c))'],
+[9,'M','Volume of Cylinder','बेलन का आयतन','V = πr²h'],
+[9,'M','Surface Area of Sphere','गोले का पृष्ठीय क्षेत्रफल','S = 4πr²'],
+[9,'S','First Equation of Motion','गति का पहला समीकरण','v = u + at'],
+[9,'S','Second Equation of Motion','गति का दूसरा समीकरण','s = ut + ½at²'],
+[9,'S','Newton’s Second Law','न्यूटन का दूसरा नियम','F = m × a'],
+[9,'S','Momentum','संवेग','p = m × v'],
+[10,'M','Quadratic Formula','द्विघात सूत्र','x = (−b ± √(b² − 4ac)) / 2a'],
+[10,'M','nth Term of AP','समांतर श्रेढ़ी का nवां पद','aₙ = a + (n − 1)d'],
+[10,'M','Distance Formula','दूरी सूत्र','d = √((x₂−x₁)² + (y₂−y₁)²)'],
+[10,'M','Trigonometric Identity','त्रिकोणमितीय सर्वसमिका','sin²θ + cos²θ = 1'],
+[10,'S','Ohm’s Law','ओम का नियम','V = I × R'],
+[10,'S','Electric Power','विद्युत शक्ति','P = V × I'],
+[10,'S','Lens Formula','लेंस सूत्र','1/v − 1/u = 1/f'],
+[11,'M','Combination','संचय','nCr = n! / (r!(n−r)!)'],
+[11,'M','Sine of Sum','योग का sine','sin(A+B) = sinA cosB + cosA sinB'],
+[11,'S','Kinetic Energy','गतिज ऊर्जा','KE = ½mv²'],
+[11,'S','Potential Energy','स्थितिज ऊर्जा','PE = mgh'],
+[11,'S','Ideal Gas Law','आदर्श गैस नियम','PV = nRT'],
+[12,'M','Power Rule of Integration','समाकलन का घात नियम','∫xⁿ dx = xⁿ⁺¹/(n+1) + C'],
+[12,'M','Power Rule of Derivative','अवकलन का घात नियम','d/dx (xⁿ) = n·xⁿ⁻¹'],
+[12,'M','Conditional Probability','सप्रतिबंध प्रायिकता','P(A|B) = P(A∩B) / P(B)'],
+[12,'S','Coulomb’s Law','कूलॉम का नियम','F = k·q₁q₂ / r²'],
+[12,'S','Photon Energy','फोटॉन ऊर्जा','E = hν'],
+[12,'S','Capacitance','धारिता','C = Q / V'],
+[7,'M','Area of Parallelogram','समांतर चतुर्भुज का क्षेत्रफल','A = b × h'],
+[8,'M','Surface Area of Cube','घन का पृष्ठीय क्षेत्रफल','S = 6a²'],
+[8,'S','Work Done','किया गया कार्य','W = F × d'],
+[9,'M','Volume of Cone','शंकु का आयतन','V = ⅓πr²h'],
+[9,'M','Volume of Sphere','गोले का आयतन','V = ⁴⁄₃πr³'],
+[9,'S','Weight','भार','W = m × g'],
+[9,'S','Mole Concept','मोल अवधारणा','n = m / M'],
+[10,'M','Sum of AP','समांतर श्रेढ़ी का योग','Sₙ = n/2 [2a + (n − 1)d]'],
+[10,'M','Slope of a Line','रेखा की ढाल','m = (y₂ − y₁) / (x₂ − x₁)'],
+[10,'M','Section Formula','विभाजन सूत्र','x = (m·x₂ + n·x₁)/(m + n)'],
+[10,'S','Mirror Formula','दर्पण सूत्र','1/v + 1/u = 1/f'],
+[10,'S','Resistance of Wire','तार का प्रतिरोध','R = ρ × l / A'],
+[10,'S','Magnification','आवर्धन','m = h′/h = −v/u'],
+[11,'M','Sum of Natural Numbers','प्राकृत संख्याओं का योग','1+2+…+n = n(n+1)/2'],
+[11,'S','Wave Speed','तरंग की चाल','v = f × λ'],
+[11,'S','Heat Energy','ऊष्मा ऊर्जा','Q = m × c × ΔT'],
+[11,'S','Molarity','मोलरता','M = n / V (litre)'],
+[12,'M','Determinant (2×2)','सारणिक (2×2)','|A| = ad − bc'],
+[12,'S','Einstein Mass-Energy','आइंस्टीन द्रव्यमान-ऊर्जा','E = mc²']
+];
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),pk=a=>a[R(0,a.length-1)],sh=a=>[...a].sort(()=>Math.random()-.5);
+const G=[ // numeric problem generators
+()=>{const l=R(3,15),b=R(2,12);return{en:`A rectangle has length ${l} cm and breadth ${b} cm. Find its area (cm²).`,hi:`एक आयत की लंबाई ${l} सेमी और चौड़ाई ${b} सेमी है। क्षेत्रफल (सेमी²) बताइए।`,a:l*b,f:'A = l × b'}},
+()=>{const P=R(1,10)*1000,r=R(2,10),t=R(1,5);return{en:`Principal ₹${P}, rate ${r}% per year, time ${t} years. Find simple interest (₹).`,hi:`मूलधन ₹${P}, दर ${r}% वार्षिक, समय ${t} वर्ष। साधारण ब्याज (₹) ज्ञात कीजिए।`,a:P*r*t/100,f:'SI = (P × R × T) / 100'}},
+()=>{const t=R(2,9),v=R(5,25);return{en:`A car covers ${v*t} km in ${t} hours. Find its speed (km/h).`,hi:`एक कार ${t} घंटे में ${v*t} किमी चलती है। चाल (किमी/घंटा) बताइए।`,a:v,f:'v = d / t'}},
+()=>{const k=R(1,5),r=7*k;return{en:`Find the area of a circle of radius ${r} cm (use π = 22/7).`,hi:`${r} सेमी त्रिज्या वाले वृत्त का क्षेत्रफल निकालिए (π = 22/7)।`,a:22*r*r/7,f:'A = πr²'}},
+()=>{const m=R(2,20),a=R(2,9);return{en:`A body of mass ${m} kg has acceleration ${a} m/s². Find the force (N).`,hi:`${m} किग्रा द्रव्यमान की वस्तु का त्वरण ${a} मी/से² है। बल (न्यूटन) ज्ञात कीजिए।`,a:m*a,f:'F = m × a'}},
+()=>{const I=R(2,9),r=R(2,12);return{en:`Current ${I} A flows through a ${r} Ω resistor. Find the voltage (V).`,hi:`${r} Ω के प्रतिरोध में ${I} A धारा बहती है। विभवांतर (V) बताइए।`,a:I*r,f:'V = I × R'}},
+()=>{const m=2*R(1,10),v=R(2,10);return{en:`Find the kinetic energy (J) of ${m} kg moving at ${v} m/s.`,hi:`${v} मी/से की चाल से चलती ${m} किग्रा वस्तु की गतिज ऊर्जा (J) निकालिए।`,a:m*v*v/2,f:'KE = ½mv²'}},
+()=>{const a=R(1,9),d=R(2,6),n=R(5,15);return{en:`In an AP, a = ${a}, d = ${d}. Find the ${n}th term.`,hi:`एक समांतर श्रेढ़ी में a = ${a}, d = ${d} है। ${n}वां पद ज्ञात कीजिए।`,a:a+(n-1)*d,f:'aₙ = a + (n − 1)d'}}
+];
+const T={hi:{tv:'⚔️ ऑनलाइन मुकाबला',td:'🛡 एडमिन',tc:'⚡ गणित गेम',tx:'🖩 कैलकुलेटर',ta:'🤖 AI गुरु',t9:'🎓 कक्षा 9 विशेष',tm:'🃏 जोड़ी मिलाओ',mv:'प्रयास',mh:'नाम और उसका सही सूत्र मिलाइए',cls:'कक्षा',M:'गणित',S:'विज्ञान',all:'सभी',tf:'📘 सूत्र',tg:'🌍 GK',srch:'सूत्र या नाम खोजें...',know:'याद है ✓',prog:'याद किए',lvl:'लेवल',q2:'इस सूत्र का नाम चुनिए:',tq:'🎯 क्विज़',ts:'🧮 हल करो',t3:'🧊 3D मॉडल',tap:'पलटने के लिए टैप करें',q:'सही सूत्र चुनिए:',sc:'स्कोर',st:'लगातार सही 🔥',rd:'प्रश्न',chk:'जाँचें',ans:'उत्तर लिखें',good:'🎉 शाबाश! बिल्कुल सही!',bad:'❌ गलत। सही उत्तर: ',fm:'सूत्र: ',again:'फिर खेलें',fin:'खेल खत्म! आपका स्कोर:',nxt:'अगला',shape:'आकृति',cube:'घन',sph:'गोला',cyl:'बेलन',cone:'शंकु',rad:'त्रिज्या / भुजा',ht:'ऊँचाई',vol:'आयतन',sa:'पृष्ठीय क्षेत्रफल',drag:'घुमाने के लिए खींचिए',hint:'यहाँ सूत्र याद करें, फिर क्विज़ और हल करो में अभ्यास करें।'},
+en:{tv:'⚔️ Online Versus',td:'🛡 Admin',tc:'⚡ Math Game',tx:'🖩 Calculator',ta:'🤖 AI Guru',t9:'🎓 Class 9 Special',tm:'🃏 Match',mv:'Moves',mh:'Match each name with its formula',cls:'Class',M:'Maths',S:'Science',all:'All',tf:'📘 Formulas',tg:'🌍 GK',srch:'Search formula or name...',know:'I know it ✓',prog:'Learned',lvl:'Level',q2:'Pick the name of this formula:',tq:'🎯 Quiz',ts:'🧮 Solve',t3:'🧊 3D Model',tap:'Tap card to flip',q:'Pick the correct formula:',sc:'Score',st:'Streak 🔥',rd:'Question',chk:'Check',ans:'Type answer',good:'🎉 Well done! Correct!',bad:'❌ Not quite. Answer: ',fm:'Formula: ',again:'Play again',fin:'Game over! Your score:',nxt:'Next',shape:'Shape',cube:'Cube',sph:'Sphere',cyl:'Cylinder',cone:'Cone',rad:'Radius / side',ht:'Height',vol:'Volume',sa:'Surface area',drag:'Drag to rotate',hint:'Learn formulas here, then practise in Quiz and Solve.'}};
+const CN={IN:'India|भारत',WD:'World|विश्व',SC:'Science|विज्ञान',HS:'History|इतिहास',SP:'Sports|खेल'};
+const K=[
+['IN','Capital of India?|भारत की राजधानी क्या है?','New Delhi|नई दिल्ली','Mumbai|मुंबई','Kolkata|कोलकाता','Chennai|चेन्नई'],
+['IN','National animal of India?|भारत का राष्ट्रीय पशु कौन सा है?','Tiger|बाघ','Lion|शेर','Elephant|हाथी','Leopard|तेंदुआ'],
+['IN','National bird of India?|भारत का राष्ट्रीय पक्षी कौन सा है?','Peacock|मोर','Sparrow|गौरैया','Parrot|तोता','Crow|कौआ'],
+['IN','Longest river in India?|भारत की सबसे लंबी नदी कौन सी है?','Ganga|गंगा','Yamuna|यमुना','Godavari|गोदावरी','Narmada|नर्मदा'],
+['IN','Largest Indian state by area?|क्षेत्रफल में सबसे बड़ा राज्य?','Rajasthan|राजस्थान','Maharashtra|महाराष्ट्र','Madhya Pradesh|मध्य प्रदेश','Uttar Pradesh|उत्तर प्रदेश'],
+['IN','First Prime Minister of India?|भारत के पहले प्रधानमंत्री कौन थे?','Jawaharlal Nehru|जवाहरलाल नेहरू','Sardar Patel|सरदार पटेल','Lal Bahadur Shastri|लाल बहादुर शास्त्री','Rajendra Prasad|राजेंद्र प्रसाद'],
+['IN','Father of the Nation?|राष्ट्रपिता किसे कहा जाता है?','Mahatma Gandhi|महात्मा गांधी','Subhas Chandra Bose|सुभाष चंद्र बोस','B. R. Ambedkar|बी. आर. अंबेडकर','Bhagat Singh|भगत सिंह'],
+['IN','How many states are in India?|भारत में कितने राज्य हैं?','28|28','29|29','27|27','25|25'],
+['IN','Taj Mahal is in which city?|ताजमहल किस शहर में है?','Agra|आगरा','Delhi|दिल्ली','Jaipur|जयपुर','Lucknow|लखनऊ'],
+['WD','Largest continent?|सबसे बड़ा महाद्वीप कौन सा है?','Asia|एशिया','Africa|अफ्रीका','Europe|यूरोप','Australia|ऑस्ट्रेलिया'],
+['WD','Largest ocean?|सबसे बड़ा महासागर कौन सा है?','Pacific|प्रशांत','Atlantic|अटलांटिक','Indian|हिंद','Arctic|आर्कटिक'],
+['WD','Capital of Japan?|जापान की राजधानी क्या है?','Tokyo|टोक्यो','Beijing|बीजिंग','Seoul|सियोल','Bangkok|बैंकॉक'],
+['WD','Capital of USA?|अमेरिका की राजधानी क्या है?','Washington D.C.|वॉशिंगटन डी.सी.','New York|न्यूयॉर्क','Chicago|शिकागो','Los Angeles|लॉस एंजेलिस'],
+['WD','Highest mountain peak?|सबसे ऊँची पर्वत चोटी कौन सी है?','Mount Everest|माउंट एवरेस्ट','K2|के2','Kanchenjunga|कंचनजंगा','Mont Blanc|मोंट ब्लां'],
+['WD','Longest river in the world?|विश्व की सबसे लंबी नदी?','Nile|नील','Amazon|अमेज़न','Yangtze|यांग्त्ज़ी','Mississippi|मिसिसिपी'],
+['WD','Smallest country in the world?|विश्व का सबसे छोटा देश?','Vatican City|वेटिकन सिटी','Monaco|मोनाको','Malta|माल्टा','Nauru|नौरू'],
+['WD','How many continents are there?|कुल कितने महाद्वीप हैं?','7|7','6|6','5|5','8|8'],
+['SC','Planet closest to the Sun?|सूर्य के सबसे निकट ग्रह?','Mercury|बुध','Venus|शुक्र','Earth|पृथ्वी','Mars|मंगल'],
+['SC','Which is the Red Planet?|लाल ग्रह किसे कहते हैं?','Mars|मंगल','Jupiter|बृहस्पति','Saturn|शनि','Venus|शुक्र'],
+['SC','Gas absorbed by plants in photosynthesis?|प्रकाश संश्लेषण में पौधे कौन सी गैस लेते हैं?','Carbon dioxide|कार्बन डाइऑक्साइड','Oxygen|ऑक्सीजन','Nitrogen|नाइट्रोजन','Hydrogen|हाइड्रोजन'],
+['SC','Chemical formula of water?|पानी का रासायनिक सूत्र?','H₂O|H₂O','CO₂|CO₂','O₂|O₂','NaCl|NaCl'],
+['SC','Hardest natural substance?|सबसे कठोर प्राकृतिक पदार्थ?','Diamond|हीरा','Gold|सोना','Iron|लोहा','Quartz|क्वार्ट्ज़'],
+['SC','Speed of light?|प्रकाश की चाल कितनी है?','3,00,000 km/s|3,00,000 किमी/से','30,000 km/s|30,000 किमी/से','3,000 km/s|3,000 किमी/से','1,50,000 km/s|1,50,000 किमी/से'],
+['SC','Bones in an adult human body?|वयस्क मानव शरीर में कितनी हड्डियाँ होती हैं?','206|206','208|208','300|300','180|180'],
+['SC','Vitamin made by sunlight?|धूप से कौन सा विटामिन बनता है?','Vitamin D|विटामिन D','Vitamin A|विटामिन A','Vitamin C|विटामिन C','Vitamin K|विटामिन K'],
+['HS','Year India became independent?|भारत किस वर्ष आज़ाद हुआ?','1947|1947','1950|1950','1942|1942','1930|1930'],
+['HS','First human to walk on the Moon?|चंद्रमा पर चलने वाला पहला इंसान?','Neil Armstrong|नील आर्मस्ट्रॉन्ग','Yuri Gagarin|यूरी गागरिन','Buzz Aldrin|बज़ एल्ड्रिन','Rakesh Sharma|राकेश शर्मा'],
+['HS','Indian Constitution came into force on?|भारतीय संविधान कब लागू हुआ?','26 Jan 1950|26 जनवरी 1950','15 Aug 1947|15 अगस्त 1947','26 Nov 1949|26 नवंबर 1949','2 Oct 1948|2 अक्टूबर 1948'],
+['HS','Who wrote the national anthem?|राष्ट्रगान किसने लिखा?','Rabindranath Tagore|रवींद्रनाथ टैगोर','Bankim Chandra Chatterjee|बंकिमचंद्र चटर्जी','Sarojini Naidu|सरोजिनी नायडू','Muhammad Iqbal|मुहम्मद इक़बाल'],
+['HS','Who built the Red Fort?|लाल किला किसने बनवाया?','Shah Jahan|शाहजहाँ','Akbar|अकबर','Babur|बाबर','Aurangzeb|औरंगज़ेब'],
+['SP','Players in a cricket team?|क्रिकेट टीम में कितने खिलाड़ी होते हैं?','11|11','9|9','12|12','15|15'],
+['SP','How many rings in the Olympic logo?|ओलंपिक चिह्न में कितने छल्ले हैं?','5|5','4|4','6|6','7|7'],
+['SP','Neeraj Chopra is famous for?|नीरज चोपड़ा किस खेल के लिए प्रसिद्ध हैं?','Javelin throw|भाला फेंक','Shooting|निशानेबाज़ी','Wrestling|कुश्ती','Boxing|मुक्केबाज़ी'],
+['SP','Captain of India 1983 World Cup team?|1983 विश्व कप विजेता भारतीय टीम के कप्तान?','Kapil Dev|कपिल देव','Sachin Tendulkar|सचिन तेंदुलकर','MS Dhoni|एमएस धोनी','Sourav Ganguly|सौरव गांगुली'],
+['SP','Wimbledon is related to which sport?|विंबलडन किस खेल से जुड़ा है?','Tennis|टेनिस','Football|फुटबॉल','Golf|गोल्फ','Cricket|क्रिकेट']];
+let P={k:{},xp:0},Q='',GC='all',tm=0;try{P=JSON.parse(localStorage.getItem('fd')||'null')||P}catch(e){}
+const sv=()=>{try{localStorage.setItem('fd',JSON.stringify(P))}catch(e){}window.pushP&&window.pushP()},addxp=n=>{P.xp+=n;sv();hud()},hud=()=>{const h=document.getElementById('hud');if(h)h.textContent='⭐ '+T[L].lvl+' '+(Math.floor(P.xp/100)+1)+' · '+P.xp+' XP'},pp=s=>{const p=s.split('|');return p[L==='hi'?1:0]||p[0]};
+function gk(){clearInterval(tm);const pool=GC==='all'?K:K.filter(x=>x[0]===GC),cb=`<div class='bar'>${['all',...Object.keys(CN)].map(c=>`<button class='b ${c===GC?'on':''}' data-gc='${c}'>${c==='all'?t('all'):pp(CN[c])}</button>`).join('')}</div>`;
+if(g.i>=10){$('#main').innerHTML=cb+`<div class='box'><div class='q'>${t('fin')} ${g.sc}/10 🏆</div></div>`;return}
+const k=pk(pool),a=pp(k[2]),o=sh(k.slice(2).map(pp));
+$('#main').innerHTML=cb+`<div class='box'><div class='sc'><span>${t('rd')} ${g.i+1}/10</span><span>${t('sc')}: ${g.sc}</span><span>${t('st')}: ${g.st}</span></div><div class='tm'><i id='ti'></i></div><div class='q' style='margin-top:10px'>${pp(k[1])}</div><div class='opts'>${o.map(x=>`<button data-o='${x}'>${x}</button>`).join('')}</div></div>`;
+let left=15;const done=c=>{clearInterval(tm);document.querySelectorAll('[data-o]').forEach(z=>{z.disabled=true;if(z.dataset.o===a)z.classList.add('ok');else if(z.dataset.o===c)z.classList.add('no')});if(c===a){g.sc++;g.st++;addxp(15+g.st);boom()}else g.st=0;g.i++;document.querySelector('.box').insertAdjacentHTML('beforeend',`<div class="msg" style="font-weight:700;color:var(${c===a?'--ok':'--bad'})">${c===a?t('good'):t('bad')+a}</div>`);setTimeout(()=>{if(TAB==='g')gk()},2200)};
+document.querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>done(b.dataset.o));
+tm=setInterval(()=>{left-=.1;$('#ti').style.width=left/15*100+'%';if(left<=0)done(null)},100)}
+let L='hi',C=9,S='all',TAB='f',raf=0,g={};
+const $=s=>document.querySelector(s),t=k=>T[L][k],nm=x=>L==='hi'?x[3]:x[2],ps=()=>F.filter(x=>x[0]<=C&&(S==='all'||x[1]===S));
+function head(){hud();$('#lg').textContent=L==='hi'?'English':'हिंदी';
+$('#cl').innerHTML=[6,7,8,9,10,11,12].map(c=>`<button class="b ${c===C?'on':''}" data-c="${c}">${t('cls')} ${c}</button>`).join('')+'<span style="flex-basis:100%"></span>'+['all','M','S'].map(s=>`<button class="b ${s===S?'on':''}" data-s="${s}">${t(s)}</button>`).join('');
+$('#tb').innerHTML=[['f','tf'],['q','tq'],['s','ts'],['3','t3'],['g','tg'],['m','tm'],['9','t9'],['c','tc'],['x','tx'],['a','ta'],['v','tv']].concat(window.ME&&ME.admin?[['d','td']]:[]).map(([k,l])=>`<button class="b ${TAB===k?'on':''}" data-t="${k}">${t(l)}</button>`).join('')}
+function render(){cancelAnimationFrame(raf);clearInterval(tm);head();const m=$('#main');
+if(TAB==='f'){const qs=Q.toLowerCase(),l=F.filter(x=>(qs?(x[2]+x[3]+x[4]).toLowerCase().includes(qs):x[0]===C)&&(S==='all'||x[1]===S)),kn=l.filter(x=>P.k[x[4]]).length;m.innerHTML=`<input id='se' type='search' value='${Q.replace(/'/g,'')}' placeholder='${t('srch')}' style='width:100%;font-size:17px;padding:8px 12px;border:2px solid var(--tx);border-radius:10px;background:var(--card);color:var(--tx)'><div class='tag' style='margin-top:6px'>${t('prog')}: ${kn}/${l.length}</div><div class='pb'><i style='width:${l.length?kn/l.length*100:0}%'></i></div>`+`<p class="tag">${t('hint')} · ${t('tap')}</p><div class="grid">`+l.map(x=>`<div class="fc" tabindex="0" role="button"><div class="in"><div class="fa s${x[1]}"><div class="b" style="font-size:20px">${nm(x)}</div><div class="tag">${t(x[1])}</div></div><div class="fb"><div class="m">${x[4]}</div><button class='kb' data-k='${x[4]}'>${P.k[x[4]]?'✅':t('know')}</button></div></div></div>`).join('')+'</div>';}
+else if(TAB==='q'){g={i:0,sc:0,st:0};quiz()}
+else if(TAB==='s'){g={i:0,sc:0,st:0};solve()}else if(TAB==='g'){g={i:0,sc:0,st:0};gk()}
+else if(TAB==='m')mt();else if(TAB==='9')n9();else if(TAB==='c')spd();else if(TAB==='x')cx();else if(TAB==='a')ai();else if(TAB==='v')vs();else if(TAB==='d')adm();else d3()}
+function quiz(){const p=ps(),pool=p.length>=4?p:F.filter(x=>x[0]<=C),q=pk(pool);g.q=q;
+const rv=Math.random()<.5,ans=rv?nm(q):q[4],o=sh([ans,...sh(F.filter(x=>x[4]!==q[4])).slice(0,3).map(x=>rv?nm(x):x[4])]);
+if(g.i>=10){$('#main').innerHTML=`<div class="box"><div class="q">${t('fin')} ${g.sc}/10 🏆</div><button class="b on" id="ag" style="margin-top:12px">${t('again')}</button></div>`;$('#ag').onclick=()=>{g={i:0,sc:0,st:0};quiz()};return}
+$('#main').innerHTML=`<div class="box"><div class="sc"><span>${t('rd')} ${g.i+1}/10</span><span>${t('sc')}: ${g.sc}</span><span>${t('st')}: ${g.st}</span></div><p class="tag" style="margin-bottom:0">${rv?t('q2'):t('q')}</p><div class="q">${rv?q[4]:nm(q)}</div><div class="opts">${o.map(x=>`<button data-o="${x}">${x}</button>`).join('')}</div></div>`;
+document.querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>{const r=b.dataset.o===ans;document.querySelectorAll('[data-o]').forEach(z=>{z.disabled=true;if(z.dataset.o===ans)z.classList.add('ok')});if(r){g.sc++;g.st++;addxp(10+g.st);boom()}else{g.st=0;b.classList.add('no')}g.i++;setTimeout(quiz,1100)})}
+function solve(){if(g.i>=10){$('#main').innerHTML=`<div class="box"><div class="q">${t('fin')} ${g.sc}/10 🏆</div><button class="b on" id="ag" style="margin-top:12px">${t('again')}</button></div>`;$('#ag').onclick=()=>{g={i:0,sc:0,st:0};solve()};return}
+const p=pk(G)();g.p=p;
+$('#main').innerHTML=`<div class="box"><div class="sc"><span>${t('rd')} ${g.i+1}/10</span><span>${t('sc')}: ${g.sc}</span><span>${t('st')}: ${g.st}</span></div><div class="q" style="margin:10px 0">${L==='hi'?p.hi:p.en}</div><input id="an" type="number" step="any" inputmode="decimal" placeholder="${t('ans')}"> <button class="b on" id="ck">${t('chk')}</button><div class="msg" id="ms"></div></div>`;
+const go=()=>{const v=parseFloat($('#an').value);if(isNaN(v))return;const r=Math.abs(v-p.a)<.01;$('#ck').disabled=true;$('#an').disabled=true;
+$('#ms').innerHTML=(r?`<span style="color:var(--ok)">${t('good')}</span>`:`<span style="color:var(--bad)">${t('bad')}${p.a}</span>`)+`<br>${t('fm')}<b class="big">${p.f}</b>`;
+if(r){g.sc++;g.st++;addxp(10+g.st);boom()}else g.st=0;g.i++;$('#ck').insertAdjacentHTML('afterend',` <button class="b" id="nx">${t('nxt')}</button>`);$('#nx').onclick=solve};
+$('#ck').onclick=go;$('#an').onkeydown=e=>{if(e.key==='Enter')go()};$('#an').focus()}
+function boom(){for(let i=0;i<30;i++){const s=document.createElement('i');s.className='cf';s.style.cssText=`left:${R(0,100)}vw;background:hsl(${R(0,360)} 90% 55%);animation-delay:${R(0,300)}ms`;document.body.appendChild(s);setTimeout(()=>s.remove(),2000)}}
+CN.CP='Computer|कंप्यूटर';
+K.push(['CP','CPU stands for?|CPU का पूरा नाम?','Central Processing Unit|सेंट्रल प्रोसेसिंग यूनिट','Central Program Unit|सेंट्रल प्रोग्राम यूनिट','Computer Power Unit|कंप्यूटर पावर यूनिट','Core Process Utility|कोर प्रोसेस यूटिलिटी'],
+['CP','Father of the computer?|कंप्यूटर के जनक?','Charles Babbage|चार्ल्स बैबेज','Newton|न्यूटन','Edison|एडिसन','Tesla|टेस्ला'],
+['CP','1 byte equals how many bits?|1 बाइट में कितने बिट?','8','4','16','10'],
+['CP','Which is an input device?|इनपुट डिवाइस कौन सा है?','Keyboard|कीबोर्ड','Monitor|मॉनिटर','Printer|प्रिंटर','Speaker|स्पीकर'],
+['SC','Which gas do plants absorb?|पौधे कौन सी गैस सोखते हैं?','Carbon dioxide|कार्बन डाइऑक्साइड','Oxygen|ऑक्सीजन','Nitrogen|नाइट्रोजन','Helium|हीलियम'],
+['SC','Bones in an adult human body?|वयस्क मानव में हड्डियाँ?','206','208','300','156'],
+['WD','How many continents are there?|महाद्वीप कितने हैं?','7','5','6','8'],
+['IN','How many states are in India?|भारत में कितने राज्य हैं?','28','25','29','30'],
+['HS','Who wrote the national anthem?|राष्ट्रगान किसने लिखा?','Rabindranath Tagore|रवींद्रनाथ टैगोर','Bankim Chandra|बंकिमचंद्र','Iqbal|इक़बाल','Premchand|प्रेमचंद'],
+['SP','Who is called Master Blaster?|मास्टर ब्लास्टर किसे कहते हैं?','Sachin Tendulkar|सचिन तेंदुलकर','Virat Kohli|विराट कोहली','MS Dhoni|एमएस धोनी','Kapil Dev|कपिल देव']);
+K.push(
+['IN','Currency of India?|भारत की मुद्रा क्या है?','Rupee|रुपया','Dollar|डॉलर','Yen|येन','Taka|टका'],
+['IN','Capital of Rajasthan?|राजस्थान की राजधानी?','Jaipur|जयपुर','Jodhpur|जोधपुर','Udaipur|उदयपुर','Ajmer|अजमेर'],
+['IN','Capital of Uttar Pradesh?|उत्तर प्रदेश की राजधानी?','Lucknow|लखनऊ','Kanpur|कानपुर','Varanasi|वाराणसी','Agra|आगरा'],
+['IN','Capital of Bihar?|बिहार की राजधानी?','Patna|पटना','Gaya|गया','Ranchi|रांची','Bhopal|भोपाल'],
+['IN','National flower of India?|भारत का राष्ट्रीय पुष्प?','Lotus|कमल','Rose|गुलाब','Marigold|गेंदा','Jasmine|चमेली'],
+['IN','Largest state by area?|क्षेत्रफल में सबसे बड़ा राज्य?','Rajasthan|राजस्थान','Madhya Pradesh|मध्य प्रदेश','Maharashtra|महाराष्ट्र','Uttar Pradesh|उत्तर प्रदेश'],
+['IN','Smallest state by area?|क्षेत्रफल में सबसे छोटा राज्य?','Goa|गोवा','Sikkim|सिक्किम','Tripura|त्रिपुरा','Kerala|केरल'],
+['IN','Constitution came into force on?|संविधान कब लागू हुआ?','26 Jan 1950|26 जनवरी 1950','15 Aug 1947|15 अगस्त 1947','26 Nov 1949|26 नवंबर 1949','2 Oct 1950|2 अक्टूबर 1950'],
+['IN','Constitutional head of India?|भारत का संवैधानिक प्रमुख?','President|राष्ट्रपति','Prime Minister|प्रधानमंत्री','Chief Justice|मुख्य न्यायाधीश','Speaker|लोकसभा अध्यक्ष'],
+['IN','Elected seats in Lok Sabha?|लोकसभा की निर्वाचित सीटें?','543','545','552','250'],
+['IN','Spokes in Ashoka Chakra?|अशोक चक्र में कितनी तीलियाँ?','24','12','32','16'],
+['IN','Top colour of the tricolour?|तिरंगे में सबसे ऊपर रंग?','Saffron|केसरिया','White|सफेद','Green|हरा','Blue|नीला'],
+['WD','Capital of USA?|अमेरिका की राजधानी?','Washington D.C.|वॉशिंगटन डी.सी.','New York|न्यूयॉर्क','Chicago|शिकागो','Los Angeles|लॉस एंजिल्स'],
+['WD','Capital of Australia?|ऑस्ट्रेलिया की राजधानी?','Canberra|कैनबरा','Sydney|सिडनी','Melbourne|मेलबर्न','Perth|पर्थ'],
+['WD','Largest country by area?|क्षेत्रफल में सबसे बड़ा देश?','Russia|रूस','Canada|कनाडा','China|चीन','USA|अमेरिका'],
+['WD','Largest hot desert?|सबसे बड़ा गर्म रेगिस्तान?','Sahara|सहारा','Thar|थार','Gobi|गोबी','Kalahari|कालाहारी'],
+['WD','Eiffel Tower is in?|एफ़िल टावर कहाँ है?','Paris|पेरिस','London|लंदन','Rome|रोम','Berlin|बर्लिन'],
+['WD','Currency of Japan?|जापान की मुद्रा?','Yen|येन','Won|वॉन','Yuan|युआन','Rupee|रुपया'],
+['SC','Hardest natural substance?|सबसे कठोर प्राकृतिक पदार्थ?','Diamond|हीरा','Gold|सोना','Iron|लोहा','Quartz|क्वार्ट्ज'],
+['SC','Planet closest to the Sun?|सूर्य के सबसे निकट ग्रह?','Mercury|बुध','Venus|शुक्र','Earth|पृथ्वी','Mars|मंगल'],
+['SC','Vitamin from sunlight?|धूप से मिलने वाला विटामिन?','Vitamin D|विटामिन D','Vitamin A|विटामिन A','Vitamin C|विटामिन C','Vitamin K|विटामिन K'],
+['SC','Boiling point of water?|पानी का क्वथनांक?','100°C','90°C','80°C','120°C'],
+['SC','Sound cannot travel through?|ध्वनि किसमें नहीं चल सकती?','Vacuum|निर्वात','Water|जल','Air|वायु','Steel|इस्पात'],
+['SC','Chemical symbol of gold?|सोने का रासायनिक प्रतीक?','Au','Ag','Gd','Go'],
+['SC','Chambers in human heart?|मानव हृदय में कक्ष?','4','2','3','5'],
+['HS','Who discovered gravity?|गुरुत्वाकर्षण की खोज किसने की?','Isaac Newton|आइज़ैक न्यूटन','Einstein|आइंस्टीन','Galileo|गैलिलियो','Edison|एडिसन'],
+['HS','Who built the Taj Mahal?|ताजमहल किसने बनवाया?','Shah Jahan|शाहजहाँ','Akbar|अकबर','Humayun|हुमायूँ','Babur|बाबर'],
+['HS','Quit India Movement year?|भारत छोड़ो आंदोलन का वर्ष?','1942','1930','1920','1857'],
+['HS','Iron Man of India?|भारत के लौह पुरुष?','Sardar Patel|सरदार पटेल','Nehru|नेहरू','Subhas Bose|सुभाष बोस','Shastri|शास्त्री'],
+['HS','First Battle of Panipat year?|पानीपत की पहली लड़ाई?','1526','1556','1761','1192'],
+['SP','Neeraj Chopra plays?|नीरज चोपड़ा किस खेल में हैं?','Javelin throw|भाला फेंक','Shooting|निशानेबाजी','Wrestling|कुश्ती','Boxing|मुक्केबाजी'],
+['SP','Major Dhyan Chand is linked to?|मेजर ध्यानचंद किस खेल से जुड़े?','Hockey|हॉकी','Cricket|क्रिकेट','Football|फुटबॉल','Kabaddi|कबड्डी'],
+['SP','Rings in the Olympic logo?|ओलंपिक चिह्न में छल्ले?','5','4','6','7'],
+['CP','WWW stands for?|WWW का पूरा नाम?','World Wide Web|वर्ल्ड वाइड वेब','World Web Wire|वर्ल्ड वेब वायर','Wide World Web|वाइड वर्ल्ड वेब','Web World Wide|वेब वर्ल्ड वाइड'],
+['CP','Shortcut to copy?|कॉपी का शॉर्टकट?','Ctrl+C','Ctrl+V','Ctrl+X','Ctrl+Z']);
+const N9=[
+['M','Factorise x² − y²|x² − y² के गुणनखंड करो','(x + y)(x − y)'],
+['M','Expand (a + b + c)²|(a + b + c)² का प्रसार करो','a² + b² + c² + 2ab + 2bc + 2ca'],
+['M','a³ + b³ = ?','(a + b)(a² − ab + b²)'],
+['M','If a + b + c = 0, then a³ + b³ + c³ = ?|यदि a + b + c = 0 तो a³ + b³ + c³ = ?','3abc'],
+['M','Remainder theorem?|शेषफल प्रमेय?','p(x) ÷ (x − a) → remainder = p(a)|शेषफल = p(a)'],
+['M','Sides 3, 4, 5 cm: area by Heron?|भुजाएँ 3, 4, 5 सेमी: हीरोन से क्षेत्रफल?','s = 6, A = √(6×3×2×1) = 6 cm²|s = 6, A = √(6×3×2×1) = 6 सेमी²'],
+['M','Exterior angle of a triangle?|त्रिभुज का बहिष्कोण?','= sum of two opposite interior angles|= दो अंतः सम्मुख कोणों का योग'],
+['M','Cone: volume and CSA?|शंकु: आयतन और वक्र पृष्ठ?','V = ⅓πr²h, CSA = πrl'],
+['M','Hemisphere: CSA and TSA?|अर्धगोला: वक्र और कुल पृष्ठ?','CSA = 2πr², TSA = 3πr²'],
+['M','Is √2 rational?|क्या √2 परिमेय है?','No, irrational|नहीं, अपरिमेय है'],
+['S','Law of conservation of momentum?|संवेग संरक्षण नियम?','m₁u₁ + m₂u₂ = m₁v₁ + m₂v₂'],
+['S','Universal law of gravitation?|गुरुत्वाकर्षण का सार्वत्रिक नियम?','F = G·m₁m₂ / r²'],
+['S','Value of g on Earth?|पृथ्वी पर g का मान?','9.8 m/s²|9.8 मी/से²'],
+['S','Archimedes principle?|आर्किमिडीज़ का सिद्धांत?','Buoyant force = weight of fluid displaced|उत्प्लावन बल = विस्थापित द्रव का भार'],
+['S','Work and Power?|कार्य और शक्ति?','W = F × s, P = W / t'],
+['S','Wave speed formula?|तरंग वेग सूत्र?','v = f × λ'],
+['S','Minimum distance for an echo?|प्रतिध्वनि के लिए न्यूनतम दूरी?','17.2 m|17.2 मी'],
+['S','Electrons in nth shell?|nवीं कक्षा में अधिकतम इलेक्ट्रॉन?','2n²'],
+['S','Mole and Avogadro number?|मोल और आवोगाद्रो संख्या?','n = m / M, N = 6.022 × 10²³'],
+['S','Water: H : O mass ratio?|जल में H : O द्रव्यमान अनुपात?','1 : 8'],
+['S','Photosynthesis equation?|प्रकाश संश्लेषण समीकरण?','6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂'],
+['S','Powerhouse of the cell?|कोशिका का ऊर्जा घर?','Mitochondria|माइटोकॉन्ड्रिया']];
+function n9(){const l=N9.filter(x=>S==='all'||x[0]===S);$('#main').innerHTML=`<p class="tag">${L==='hi'?'परीक्षा में बार-बार पूछे जाने वाले प्रश्न। प्रश्न पर टैप करके उत्तर देखिए, पहले खुद सोचिए!':'Frequently asked in exams. Tap a question to see the answer. Try first!'}</p>`+l.map(x=>`<details class="box"><summary class="b" style="font-size:18px">${x[0]==='M'?'📐':'🔬'} ${pp(x[1])}</summary><div class="big" style="margin-top:8px">${pp(x[2])}</div></details>`).join('')}
+function spd(){const lv=Math.max(1,Math.min(5,C-5));let sc=0,st=0,left=60,q;
+$('#main').innerHTML=`<div class="box"><div class="sc"><span id="a1">${t('sc')}: 0</span><span id="a2">⏱ 60</span><span id="a3">${t('st')}: 0</span><span>🏆 ${P.best||0}</span></div><div class="tm"><i id="ti"></i></div><div class="q" id="aq" style="font-size:38px;text-align:center;margin:14px 0"></div><div style="text-align:center"><input id="an" type="number" inputmode="numeric" placeholder="?"> <button class="b on" id="ck">OK</button></div><div class="msg" id="ms"></div><p class="tag">${L==='hi'?'60 सेकंड में जितने हल करें। हर 5 सही पर +3 सेकंड! कठिनाई कक्षा के अनुसार।':'Solve as many as you can in 60s. Every 5 correct gives +3s! Difficulty follows your class.'}</p></div>`;
+const nx=()=>{const o=pk(['+','−','×','÷']);let a,b,r;if(o==='+'){a=R(5,20*lv);b=R(5,20*lv);r=a+b}else if(o==='−'){a=R(10,25*lv);b=R(1,a);r=a-b}else if(o==='×'){a=R(2,6+2*lv);b=R(2,9+lv);r=a*b}else{b=R(2,9);r=R(2,8+lv);a=b*r}
+q=r;$('#aq').textContent=`${a} ${o} ${b} = ?`;$('#an').value='';$('#an').focus()};
+const go=()=>{const v=$('#an').value;if(v==='')return;if(+v===q){sc++;st++;$('#ms').textContent='✅';if(st%5===0){left+=3;boom()}}else{st=0;$('#ms').textContent='❌ '+q}$('#a1').textContent=t('sc')+': '+sc;$('#a3').textContent=t('st')+': '+st;nx()};
+nx();$('#ck').onclick=go;$('#an').onkeydown=e=>{if(e.key==='Enter')go()};
+tm=setInterval(()=>{left-=.1;$('#a2').textContent='⏱ '+Math.ceil(left);$('#ti').style.width=Math.min(100,left/60*100)+'%';if(left<=0){clearInterval(tm);const nb=sc>(P.best||0);if(nb){P.best=sc;sv()}addxp(sc*2);if(nb)boom();$('#main').innerHTML=`<div class="box"><div class="q">${t('fin')} ${sc} ${nb?'🏆 New best!':''}</div><button class="b on" id="ag" style="margin-top:12px">${t('again')}</button></div>`;$('#ag').onclick=spd}},100)}
+function cx(){const ks=['C','(',')','⌫','7','8','9','÷','4','5','6','×','1','2','3','−','0','.','%','+','x²','√','π','='];let e='';
+$('#main').innerHTML=`<div class="box" style="max-width:380px;margin:10px auto"><div id="cd" class="q" style="min-height:70px;text-align:right;word-break:break-all;background:var(--bg);border:2px solid var(--tx);border-radius:10px;padding:8px 12px">0</div><div class="mg" style="grid-template-columns:repeat(4,1fr);margin-top:10px">${ks.map(k=>`<button class="b ${'÷×−+='.includes(k)?'on':''}" style="font-size:22px;min-height:54px;padding:0" data-ck="${k}">${k}</button>`).join('')}</div></div>`;
+const sh2=()=>{$('#cd').textContent=e||'0'},ev=()=>{try{const s=e.replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-').replace(/π/g,'('+Math.PI+')').replace(/√/g,'Math.sqrt').replace(/%/g,'/100').replace(/²/g,'**2');if(/[^0-9+\-*\/().\sMathsqrt]/.test(s))return null;const v=Function('"use strict";return ('+s+')')();return isFinite(v)?+v.toPrecision(12):null}catch(_){return null}};
+document.querySelectorAll('[data-ck]').forEach(b=>b.onclick=()=>{const k=b.dataset.ck;if(k==='C')e='';else if(k==='⌫')e=e.slice(0,-1);else if(k==='='){const v=ev();e=v===null?'':String(v);if(v===null){$('#cd').textContent='Error';return}}else if(k==='x²')e+='²';else if(k==='√')e+='√(';else e+=k;sh2()})}
+async function ai(){const hi=L==='hi';
+$('#main').innerHTML=`<div class="box"><div class="q" style="font-size:20px">🤖 ${hi?'AI गुरु – कोई भी सवाल पूछिए':'AI Guru – ask any question'}</div><textarea id="aq2" rows="4" style="width:100%;margin-top:8px;font:17px Hind,sans-serif;padding:8px;border:2px solid var(--tx);border-radius:10px;background:var(--card);color:var(--tx)" placeholder="${hi?'यहाँ सवाल लिखिए...':'Type your question...'}"></textarea><div id="ph" style="margin:6px 0">📷 ${hi?'सवाल की फोटो:':'Photo of the question:'} <input id="im" type="file" accept="image/*"></div><div class="bar"><button class="b on" id="as">${hi?'जवाब पाएँ':'Get answer'}</button><a class="b" id="ge" href="https://gemini.google.com/app" target="_blank" rel="noopener">Gemini ↗</a><a class="b" id="gp" href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT ↗</a></div><div class="tag" id="nt">${hi?'Gemini/ChatGPT दबाने पर आपका सवाल कॉपी हो जाता है, वहाँ पेस्ट कर दीजिए।':'Tapping Gemini/ChatGPT copies your question; paste it there.'}</div><div id="ao" style="white-space:pre-wrap;margin-top:10px;font-size:17px"></div></div>`;
+['ge','gp'].forEach(i=>$('#'+i).addEventListener('click',()=>{try{navigator.clipboard.writeText($('#aq2').value)}catch(_){}}));
+let sm=null,io=false;try{sm=window.claude?await claude.use('sample'):null;io=!!(sm&&sm.limits&&(await sm.limits()).images)}catch(_){}
+if(!io)$('#ph').style.display='none';if(!sm)$('#as').style.display='none';
+$('#as').onclick=async()=>{const q=$('#aq2').value.trim(),f=$('#im').files[0];if(!q&&!f)return;$('#ao').textContent='⏳';try{const r=await sm(`You are a friendly school tutor for Indian students (class 6-12, NCERT/CBSE). Reply in ${hi?'simple Hindi (Devanagari)':'simple English'}. Use plain text only, no LaTeX. Solve step by step, name the formula used, and state the final answer clearly. If a photo is attached, read the question from it. Question: ${q||'(see photo)'}`,{images:f?[f]:undefined,cache:false,onText:x=>{$('#ao').textContent=x.text}});$('#ao').textContent=r.text;addxp(2)}catch(e){$('#ao').textContent='❌ '+((e&&e.message)||e)}}}
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';'),gt=h=>{$('#gate').innerHTML=`<div class="box">${h}</div>`};let ME=null,VR=null,pt=0;window.pushP=()=>{if(!ME)return;clearTimeout(pt);pt=setTimeout(()=>ME.ref.update({xp:P.xp||0,best:P.best||0,wins:P.wins||0,ts:Date.now()}).catch(()=>{}),1500)};
+async function boot(){const hi=L==='hi';let db=null,u=null;try{db=await claude.use('db');u=await claude.use('user')}catch(_){}
+if(!db||!u){gt(`<div class="q">🔒 Sign in</div><p>Is page ko chalane ke liye claude.ai par login chahiye. Login karke page dobara kholiye.</p>`);return}
+const v=await u.me(),id=(await u.id())||v.id;if(!id){gt('<div class="q">🔒 Sign in required</div>');return}
+const ref=db.doc('players/'+id),admin=!!(await u.canEdit()||await u.isOwner());let s;try{s=await ref.get()}catch(e){gt('<div class="q">⚠️ '+esc(e.message||e)+'</div>');return}
+const open=async d=>{ME={id,ref,name:d.name,admin,db};window.ME=ME;P.xp=Math.max(P.xp||0,d.xp||0);P.best=Math.max(P.best||0,d.best||0);P.wins=d.wins||0;document.body.classList.remove('lock');render();try{const c=await db.doc('config/main').get();if(c.exists&&c.data().notice)$('#ntc').textContent='📢 '+c.data().notice}catch(_){}};
+if(s.exists){const d=s.data();if(d.banned){gt('<div class="q">🚫 Blocked</div><p>Admin ne aapka access band kiya hai.</p>');return}open(d);return}
+gt(`<div class="q">🎓 Sign up</div><p class="tag">Naam daaliye. Sign up ke baad hi Formula Duniya khulegi, aur aapka XP save rahega.</p><input id="sn1" maxlength="20" value="${esc(v.name||'')}" style="font-size:18px;padding:8px;border:2px solid var(--tx);border-radius:10px;background:var(--card);color:var(--tx);width:100%"><button class="b on" id="sg" style="margin-top:10px">Sign up</button><div class="msg" id="ge2"></div>`);
+$('#sg').onclick=async()=>{const name=$('#sn1').value.trim().slice(0,20);if(!name)return;const d={name,xp:P.xp||0,best:P.best||0,wins:0,banned:false,ts:Date.now()};try{await ref.set(d);open(d)}catch(e){$('#ge2').textContent='❌ '+(e.message||e)}}}
+boot();
+const mb=a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296},sf=(a,rg)=>{a=[...a];for(let j=a.length-1;j>0;j--){const k=Math.floor(rg()*(j+1));[a[j],a[k]]=[a[k],a[j]]}return a};
+async function vs(){const hi=L==='hi';if(!ME){return}
+$('#main').innerHTML=`<div class="box"><div class="q" style="font-size:20px">⚔️ ${hi?'ऑनलाइन मुकाबला':'Online Versus'}</div><p class="tag">${hi?'दोस्त के साथ वही कोड डालिए (जैसे ABC)। सबको वही 10 GK सवाल मिलेंगे, ज़्यादा स्कोर वाला जीतेगा।':'Everyone enters the same code and gets the same 10 GK questions. Top score wins.'}</p><input id="rc" maxlength="8" placeholder="CODE" style="font-size:22px;padding:8px;border:2px solid var(--tx);border-radius:10px;background:var(--card);color:var(--tx);width:140px;text-transform:uppercase"> <button class="b on" id="jn">${hi?'जुड़ें':'Join'}</button><div id="vb" style="margin-top:10px"></div></div>`;
+$('#jn').onclick=async()=>{const code=$('#rc').value.trim().toUpperCase();if(!code)return;let rm=null;try{rm=await claude.use('room')}catch(_){}if(!rm){$('#vb').textContent='❌ Room unavailable';return}
+if(VR)try{await VR.leave()}catch(_){}
+const r=VR=await rm.join('vs-'+code);let qs=null,i=0,sc=0,seed=0,done=false;const me=p=>r.presence(Object.assign({name:ME.name},p));await me({sc:0,fin:false});
+$('#vb').innerHTML=`<b>${hi?'कमरा':'Room'}: ${esc(code)}</b><div id="bd"></div><button class="b on" id="go" style="margin:8px 0">${hi?'▶ मुकाबला शुरू करें':'▶ Start duel'}</button><div id="vq"></div>`;
+const board=()=>{const ps=[...r.peers()].sort((a,b)=>(b.presence.sc||0)-(a.presence.sc||0));$('#bd').innerHTML=ps.map(p=>`<div class="b" style="font-size:18px">${p.isMe?'⭐':'👤'} ${esc(p.presence.name||'?')}: ${p.presence.sc||0} ${p.presence.fin?'✅':''}</div>`).join('');
+if(qs&&!done&&ps.length&&ps.every(p=>p.presence.fin)&&i>=10){done=true;const top=ps[0],win=top.isMe&&(ps.length<2||(ps[1].presence.sc||0)<sc);if(win){P.wins=(P.wins||0)+1;addxp(50);boom()}else addxp(10);$('#vq').innerHTML=`<div class="q">${win?'🏆 '+(hi?'आप जीते!':'You win!'):(hi?'मुकाबला खत्म':'Duel over')}</div>`}};
+const start=sd=>{if(qs)return;seed=sd;const rg=mb(sd);qs=sf(K,rg).slice(0,10).map(q=>[q,sf(q.slice(2),rg)]);i=0;sc=0;show()};
+const show=()=>{if(i>=10){me({sc,fin:true});$('#vq').innerHTML=`<p>⏳ ${hi?'बाकी खिलाड़ियों का इंतज़ार...':'Waiting for others...'}</p>`;board();return}
+const [q,o]=qs[i];$('#vq').innerHTML=`<div class="tag">${i+1}/10</div><div class="q">${esc(pp(q[1]))}</div><div class="opts">${o.map(x=>`<button data-vo="${esc(x)}">${esc(pp(x))}</button>`).join('')}</div>`;
+document.querySelectorAll('[data-vo]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-vo]').forEach(z=>{z.disabled=true;if(z.dataset.vo===pp(q[2])||z.dataset.vo===q[2])z.classList.add('ok')});if(b.dataset.vo===q[2])sc+=10;else b.classList.add('no');i++;me({sc});setTimeout(show,900)})};
+$('#go').onclick=()=>{const sd=Date.now()%1e9;me({go:sd});start(sd)};
+r.onPeers(()=>{board();const g=r.peers().find(p=>p.presence.go&&!p.isMe);if(g&&!qs)start(g.presence.go)});board()}}
+async function adm(){if(!ME||!ME.admin)return;const db=ME.db;
+$('#main').innerHTML=`<div class="box"><div class="q" style="font-size:20px">🛡 Admin Panel</div><div class="bar"><input id="nt3" placeholder="Announcement" style="flex:1;font-size:16px;padding:8px;border:2px solid var(--tx);border-radius:10px;background:var(--card);color:var(--tx)"><button class="b on" id="sn">Post</button></div><div id="al">⏳</div></div>`;
+$('#sn').onclick=()=>db.doc('config/main').set({notice:$('#nt3').value.slice(0,200)}).then(()=>{$('#ntc').textContent=$('#nt3').value?'📢 '+$('#nt3').value:''});
+try{const s=await db.collection('players').orderBy('xp','desc').limit(100).get();$('#al').innerHTML=`<p class="tag">${s.size} players</p>`+s.docs.map(d=>{const x=d.data();return `<div style="display:flex;gap:6px;align-items:center;margin:6px 0;flex-wrap:wrap"><b style="flex:1;min-width:110px">${esc(x.name)}${x.banned?' 🚫':''}</b><span>${x.xp||0} XP · 🏆${x.wins||0}</span><button data-bn="${esc(d.id)}" data-b="${x.banned?1:0}">${x.banned?'Unban':'Ban'}</button><button data-dl="${esc(d.id)}">🗑</button></div>`}).join('');
+document.querySelectorAll('[data-bn]').forEach(b=>b.onclick=async()=>{await db.doc('players/'+b.dataset.bn).update({banned:b.dataset.b!=='1'});adm()});
+document.querySelectorAll('[data-dl]').forEach(b=>b.onclick=async()=>{if(confirm('Delete?')){await db.doc('players/'+b.dataset.dl).delete();adm()}})}catch(e){$('#al').textContent='❌ '+(e.message||e)}}
+function mt(){const p=sh(ps().length>=6?ps():F).slice(0,6),cs=sh(p.flatMap((x,i)=>[{i,t:nm(x)},{i,t:x[4]}]));let o=[],k=0,mv=0;
+$('#main').innerHTML=`<div class="box"><div class="sc"><span id="mv">${t('mv')}: 0</span></div><p class="tag">${t('mh')}</p><div class="mg">${cs.map((c,j)=>`<button class="mc" data-j="${j}">❓</button>`).join('')}</div><div class="msg q" id="ms"></div></div>`;
+document.querySelectorAll('.mc').forEach(b=>b.onclick=()=>{if(o.length>1||b.classList.contains('up')||b.classList.contains('ok'))return;const c=cs[b.dataset.j];b.textContent=c.t;b.classList.add('up');o.push([b,c.i]);
+if(o.length===2){mv++;$('#mv').textContent=t('mv')+': '+mv;const[a,z]=o;if(a[1]===z[1]){[a[0],z[0]].forEach(e=>{e.classList.remove('up');e.classList.add('ok')});o=[];if(++k===6){boom();addxp(30);$('#ms').textContent=t('good')}}else setTimeout(()=>{[a[0],z[0]].forEach(e=>{e.classList.remove('up');e.textContent='❓'});o=[]},900)}})}
+function d3(){const pi=Math.PI;
+$('#main').innerHTML=`<div class="box"><div class="bar" id="sb">${[['cube','cube'],['sph','sph'],['cyl','cyl'],['cone','cone']].map(([k,l],i)=>`<button class="b ${i===2?'on':''}" data-sh="${k}">${t(l)}</button>`).join('')}</div><div id="cv"></div><p class="tag">${t('drag')}</p>
+<label>${t('rad')}: <b id="rv">2</b><input id="r" type="range" min="1" max="4" step=".5" value="2"></label><label id="hl">${t('ht')}: <b id="hv">3</b><input id="h" type="range" min="1" max="5" step=".5" value="3"></label>
+<div style="margin-top:10px"><div>${t('vol')}: <span class="big" id="vo"></span></div><div>${t('sa')}: <span class="big" id="sa"></span></div></div></div>`;
+let shape='cyl',el=$('#cv'),w=el.clientWidth,H=300,sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(50,w/H,.1,100);cam.position.set(0,2.5,11);
+const rd=new THREE.WebGLRenderer({antialias:true,alpha:true});rd.setSize(w,H);rd.setPixelRatio(Math.min(devicePixelRatio,2));el.appendChild(rd.domElement);
+sc.add(new THREE.AmbientLight(0xffffff,.65));const dl=new THREE.DirectionalLight(0xffffff,.9);dl.position.set(5,8,6);sc.add(dl);
+const grp=new THREE.Group();grp.rotation.x=.35;sc.add(grp);
+const up=()=>{const r=+$('#r').value,h=+$('#h').value;$('#rv').textContent=r;$('#hv').textContent=h;$('#hl').style.display=(shape==='cube'||shape==='sph')?'none':'block';
+let ge,v,s,f;
+if(shape==='cube'){const a=r;ge=new THREE.BoxGeometry(a,a,a);v=a**3;s=6*a*a;f=`a³ = ${a}³`}
+else if(shape==='sph'){ge=new THREE.SphereGeometry(r,24,18);v=4/3*pi*r**3;s=4*pi*r*r;f=`⁴⁄₃πr³`}
+else if(shape==='cyl'){ge=new THREE.CylinderGeometry(r,r,h,32);v=pi*r*r*h;s=2*pi*r*(r+h);f=`πr²h`}
+else{ge=new THREE.ConeGeometry(r,h,32);v=pi*r*r*h/3;s=pi*r*(r+Math.hypot(r,h));f=`⅓πr²h`}
+while(grp.children.length){const o=grp.children.pop();o.geometry.dispose()}
+grp.add(new THREE.Mesh(ge,new THREE.MeshStandardMaterial({color:0x2f5bff,transparent:true,opacity:.8})));
+grp.add(new THREE.LineSegments(shape==='sph'?new THREE.WireframeGeometry(ge):new THREE.EdgesGeometry(ge,15),new THREE.LineBasicMaterial({color:0xffd23f})));
+$('#vo').textContent=`${f} = ${v.toFixed(2)}`;$('#sa').textContent=s.toFixed(2)};
+$('#r').oninput=$('#h').oninput=up;
+document.querySelectorAll('[data-sh]').forEach(b=>b.onclick=()=>{shape=b.dataset.sh;document.querySelectorAll('[data-sh]').forEach(z=>z.classList.toggle('on',z===b));up()});
+let dr=false,lx=0,ly=0;el.onpointerdown=e=>{dr=true;lx=e.clientX;ly=e.clientY};addEventListener('pointerup',()=>dr=false);
+el.onpointermove=e=>{if(!dr)return;grp.rotation.y+=(e.clientX-lx)*.01;grp.rotation.x+=(e.clientY-ly)*.01;lx=e.clientX;ly=e.clientY};
+up();const lp=()=>{if(!dr)grp.rotation.y+=.01;rd.render(sc,cam);raf=requestAnimationFrame(lp)};lp()}
+document.addEventListener('click',e=>{const kb=e.target.closest('[data-k]');if(kb){const f=kb.dataset.k;P.k[f]=!P.k[f];if(P.k[f])addxp(5);sv();kb.textContent=P.k[f]?'✅':t('know');return}const gc=e.target.closest('[data-gc]');if(gc){GC=gc.dataset.gc;g={i:0,sc:0,st:0};gk();return}const x=e.target.closest('[data-c],[data-s],[data-t],.fc');if(!x)return;
+if(x.dataset.c)C=+x.dataset.c;else if(x.dataset.s)S=x.dataset.s;else if(x.dataset.t)TAB=x.dataset.t;else{x.classList.toggle('f');return}render()});
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('fc')){e.preventDefault();e.target.classList.toggle('f')}});
+document.addEventListener('input',e=>{if(e.target.id==='se'){Q=e.target.value;render();const s=$('#se');s.focus();s.setSelectionRange(Q.length,Q.length)}});
+$('#lg').onclick=()=>{L=L==='hi'?'en':'hi';document.documentElement.lang=L;render()};
+$('#th').onclick=()=>{const r=document.documentElement,d=r.dataset.theme==='dark'||(!r.dataset.theme&&matchMedia('(prefers-color-scheme:dark)').matches);r.dataset.theme=d?'light':'dark'};
+render();
+</script></body></html>
